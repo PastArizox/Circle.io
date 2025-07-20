@@ -1,3 +1,5 @@
+import ClientGameData from './clientGameData.js';
+
 export default class DisplayManager {
     constructor(canvas) {
         this.canvas = canvas;
@@ -15,7 +17,7 @@ export default class DisplayManager {
         this.canvasContext.save();
 
         this.renderBackground('lightgray');
-        this.renderPlayers([]);
+        this.renderPlayers();
         this.renderFood([]);
 
         this.canvasContext.restore();
@@ -33,7 +35,13 @@ export default class DisplayManager {
         );
     }
 
-    renderPlayers(players) {}
+    renderPlayers() {
+        const players = ClientGameData.players || [];
+
+        players.forEach((player) => {
+            player.draw(this.canvasContext);
+        });
+    }
 
     renderFood(blobs) {}
 }

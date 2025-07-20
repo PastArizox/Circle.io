@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
 import DisplayManager from './displayManager.js';
+import Player from '../common/player.js';
+import ClientGameData from './clientGameData.js';
 
 console.log('Client-side code is running!');
 
@@ -17,7 +19,8 @@ const canvas = document.getElementById('canvas');
 canvas.width = 500;
 canvas.height = 500;
 
-const canvasContext = canvas.getContext('2d');
+const localPlayer = new Player(250, 250);
+ClientGameData.players = [localPlayer];
 
 function update() {
     // Update game state or animations here
