@@ -14,6 +14,9 @@ socket.on('disconnect', () => {
 });
 
 const canvas = document.getElementById('canvas');
+canvas.width = 500;
+canvas.height = 500;
+
 const canvasContext = canvas.getContext('2d');
 
 function update() {

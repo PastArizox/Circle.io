@@ -14,9 +14,11 @@ export default class DisplayManager {
         );
         this.canvasContext.save();
 
-        this.renderBackground('black');
+        this.renderBackground('lightgray');
         this.renderPlayers([]);
         this.renderFood([]);
+
+        this.canvasContext.restore();
 
         requestAnimationFrame(this.render);
     }
