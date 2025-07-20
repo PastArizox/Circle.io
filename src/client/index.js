@@ -1,1 +1,1 @@
-console.log("Client-side code is running!");
+console.log('Client-side code is running!');
