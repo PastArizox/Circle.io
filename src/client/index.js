@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import DisplayManager from './displayManager.js';
 
 console.log('Client-side code is running!');
 
@@ -14,3 +15,10 @@ socket.on('disconnect', () => {
 
 const canvas = document.getElementById('canvas');
 const canvasContext = canvas.getContext('2d');
+
+function update() {
+    // Update game state or animations here
+}
+
+requestAnimationFrame(new DisplayManager(canvas).render);
+setInterval(update, 1000 / 60);
