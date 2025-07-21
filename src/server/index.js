@@ -1,6 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import Player from '../common/player.js';
 import ServerGameData from '../client/clientGameData.js';
 
 console.log('Server-side code is running!');
