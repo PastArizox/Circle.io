@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log('User disconnected with ID:', socket.id);
+
+        ServerGameData.players = ServerGameData.players.filter(
+            (player) => player.id !== socket.id
+        );
+
+        socket.broadcast.emit('playerDisconnected', socket.id);
     });
 });
 
