@@ -1,9 +1,9 @@
 import Circle from './circle.js';
 
 export default class Player extends Circle {
-    constructor(x, y) {
+    constructor(id, x, y) {
         super(x, y, 20, 'blue');
-        this.id = null; // Player ID will be set when connected to the server
+        this.id = id; // Player ID will be set when connected to the server
         this.name = 'Player';
         this.velocity = 2;
     }
