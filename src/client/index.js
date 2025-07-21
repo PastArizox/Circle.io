@@ -19,7 +19,7 @@ const canvas = document.getElementById('canvas');
 canvas.width = 500;
 canvas.height = 500;
 
-const localPlayer = new Player(250, 250);
+const localPlayer = new Player(null, 250, 250);
 ClientGameData.players = [localPlayer];
 
 function update() {
