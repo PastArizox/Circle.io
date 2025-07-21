@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import DisplayManager from './displayManager.js';
-import Player from '../common/player.js';
+import EventsHandler from './eventsHandler.js';
 import ClientGameData from './clientGameData.js';
 
 console.log('Client-side code is running!');
@@ -16,15 +16,16 @@ socket.on('disconnect', () => {
 });
 
 const canvas = document.getElementById('canvas');
-canvas.width = 500;
-canvas.height = 500;
+ClientGameData.canvas = canvas;
 
-const localPlayer = new Player(null, 250, 250);
-ClientGameData.players = [localPlayer];
+const eventsHandler = new EventsHandler(socket);
+eventsHandler.bindEvents();
+
+const displayManager = new DisplayManager(canvas);
+requestAnimationFrame(displayManager.render);
 
 function update() {
     // Update game state or animations here
 }
 
-requestAnimationFrame(new DisplayManager(canvas).render);
 setInterval(update, 1000 / 60);
