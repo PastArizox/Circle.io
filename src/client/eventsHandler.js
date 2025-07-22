@@ -14,30 +14,33 @@ export default class EventsHandler {
             'playerDisconnected',
             this.handlePlayerDisconnected.bind(this)
         );
+        this.socket.on('playerMoved', this.handlePlayerMoved.bind(this));
     }
 
     handleCanvasSize(size) {
-        console.log('Canvas size received from server:', size);
         ClientGameData.canvas.width = size.width;
         ClientGameData.canvas.height = size.height;
     }
 
     handleCurrentPlayers(players) {
-        console.log('Current players:', players);
         ClientGameData.players = players.map(
             (player) => new Player(player.id, player.x, player.y)
         );
     }
 
     handleNewPlayer(player) {
-        console.log('New player joined:', player);
         ClientGameData.players.push(new Player(player.id, player.x, player.y));
     }
 
     handlePlayerDisconnected(playerId) {
-        console.log('Player disconnected:', playerId);
         ClientGameData.players = ClientGameData.players.filter(
             (player) => player.id !== playerId
+        );
+    }
+
+    handlePlayerMoved(data) {
+        ClientGameData.players = ClientGameData.players.map((p) =>
+            p.id === data.id ? { ...p, x: data.x, y: data.y } : p
         );
     }
 }

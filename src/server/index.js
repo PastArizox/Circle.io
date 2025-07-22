@@ -3,10 +3,12 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import Player from '../common/player.js';
 import ServerGameData from '../server/serverGameData.js';
+import EventsHandler from './eventsHandler.js';
 
 console.log('Server-side code is running!');
 
 const port = process.env.PORT || 8080;
+const eventsHandler = new EventsHandler();
 
 const app = express();
 app.use(express.static('dist'));
@@ -20,6 +22,8 @@ io.on('connection', (socket) => {
 
     initializeCanvas(socket);
     initializeNewPlayer(socket);
+
+    eventsHandler.bindEvents(socket);
 
     socket.on('disconnect', () => {
         console.log('User disconnected with ID:', socket.id);
@@ -56,3 +60,20 @@ function disconnectUser(socket) {
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+function updateGameData() {
+    movePlayers();
+}
+
+function movePlayers() {
+    ServerGameData.players.forEach((players) => {
+        const mouseCoordinates =
+            ServerGameData.playersMouseCoordinates[players.id];
+        if (mouseCoordinates) {
+            players.moveTo(mouseCoordinates.x, mouseCoordinates.y);
+            io.emit('currentPlayers', ServerGameData.players);
+        }
+    });
+}
+
+setInterval(updateGameData, 1000 / 60);

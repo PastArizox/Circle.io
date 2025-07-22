@@ -5,4 +5,5 @@ export default class ServerGameData {
         width: 800,
         height: 800,
     };
+    static playersMouseCoordinates = [];
 }
