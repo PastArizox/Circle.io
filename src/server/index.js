@@ -2,16 +2,11 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import Player from '../common/player.js';
-import ServerGameData from '../client/clientGameData.js';
+import ServerGameData from '../server/serverGameData.js';
 
 console.log('Server-side code is running!');
 
 const port = process.env.PORT || 8080;
-
-const canvasSize = {
-    width: 800,
-    height: 800,
-};
 
 const app = express();
 app.use(express.static('dist'));
@@ -34,14 +29,14 @@ io.on('connection', (socket) => {
 });
 
 function initializeCanvas(socket) {
-    socket.emit('canvasSize', canvasSize);
+    socket.emit('canvasSize', ServerGameData.canvasSize);
 }
 
 function initializeNewPlayer(socket) {
     const newPlayer = new Player(
         socket.id,
-        Math.random() * canvasSize.width,
-        Math.random() * canvasSize.height
+        Math.random() * ServerGameData.canvasSize.width,
+        Math.random() * ServerGameData.canvasSize.height
     );
 
     ServerGameData.players.push(newPlayer);

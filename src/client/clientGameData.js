@@ -1,4 +1,4 @@
-export default class ServerGameData {
+export default class ClientGameData {
     static players = [];
     static blobs = [];
     static canvas;
