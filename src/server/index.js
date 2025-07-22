@@ -29,11 +29,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('User disconnected with ID:', socket.id);
 
-        ServerGameData.players = ServerGameData.players.filter(
-            (player) => player.id !== socket.id
-        );
-
-        socket.broadcast.emit('playerDisconnected', socket.id);
+        disconnectUser(socket);
     });
 });
 
@@ -52,6 +48,14 @@ function initializeNewPlayer(socket) {
 
     socket.emit('currentPlayers', ServerGameData.players);
     socket.broadcast.emit('newPlayer', newPlayer);
+}
+
+function disconnectUser(socket) {
+    ServerGameData.players = ServerGameData.players.filter(
+        (player) => player.id !== socket.id
+    );
+
+    socket.broadcast.emit('playerDisconnected', socket.id);
 }
 
 server.listen(port, () => {
